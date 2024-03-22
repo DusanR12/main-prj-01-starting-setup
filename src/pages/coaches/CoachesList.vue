@@ -2,23 +2,26 @@
   <section>
     <h2 style="margin-bottom: 8rem">Filter</h2>
   </section>
-  <div>
-    <div class="controls">
-      <button>Refresh</button>
-      <router-link to="/register">Register as a Coach</router-link>
-    </div>
-    <ul v-if="hasCoaches">
-      <coach-item v-for="coach in allCoaches"
-        :key="coach.id"
-        :id="coach.id"
-        :firstName="coach.firstName"
-        :lastName="coach.lastName"
-        :areas="coach.areas"
-        :hourlyRate="coach.hourlyRate"
-      ></coach-item>
-    </ul>
-    <p v-else>No coaches found</p>
-  </div>
+  <section>
+    <base-card
+      ><div class="controls">
+        <button>Refresh</button>
+        <router-link to="/register">Register as a Coach</router-link>
+      </div>
+      <ul v-if="hasCoaches">
+        <coach-item
+          v-for="coach in allCoaches"
+          :key="coach.id"
+          :id="coach.id"
+          :firstName="coach.firstName"
+          :lastName="coach.lastName"
+          :areas="coach.areas"
+          :hourlyRate="coach.hourlyRate"
+        ></coach-item>
+      </ul>
+      <p v-else>No coaches found</p></base-card
+    >
+  </section>
 </template>
 
 <script>
@@ -40,7 +43,7 @@ export default {
 </script>
 
 <style scoped>
-  ul {
+ul {
   list-style: none;
   margin: 0;
   padding: 0;
