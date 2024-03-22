@@ -1,3 +1,8 @@
 <template>
-    <h4>This is a <b>Coaches List</b> component</h4>
+  <section>
+    <h2>Filter</h2>
+  </section>
+  <section>
+    <h2>Coaches</h2>
+  </section>
 </template>
