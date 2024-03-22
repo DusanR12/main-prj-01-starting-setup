@@ -5,8 +5,8 @@
   <section>
     <base-card
       ><div class="controls">
-        <button>Refresh</button>
-        <router-link to="/register">Register as a Coach</router-link>
+        <base-button mode="outline">Refresh</base-button>
+        <base-button link to="/register">Register as a Coach</base-button>
       </div>
       <ul v-if="hasCoaches">
         <coach-item
@@ -26,9 +26,11 @@
 
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
+import BaseButton from '../../components/UI/BaseButton.vue';
 export default {
   components: {
     CoachItem,
+    BaseButton,
   },
   computed: {
     allCoaches() {
