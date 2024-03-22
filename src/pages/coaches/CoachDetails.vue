@@ -1,3 +1,5 @@
 <template>
-    <h4>This is a <b>Coach Details</b> component</h4>
+    Details for Coach
+    <router-link to="/coaches/c1/contact">Contact</router-link>
+    <router-view></router-view>
 </template>

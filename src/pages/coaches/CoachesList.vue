@@ -1,8 +1,12 @@
 <template>
   <section>
-    <h2>Filter</h2>
+    <h2 style="margin-bottom: 8rem;">Filter</h2>
   </section>
   <section>
-    <h2>Coaches</h2>
+    <div class="controls">
+      <button>Refresh</button>
+      <router-link to="/register">Register as a Coach</router-link>
+    </div>
+    <ul style="font-size: 48px;">Coaches</ul>
   </section>
 </template>
