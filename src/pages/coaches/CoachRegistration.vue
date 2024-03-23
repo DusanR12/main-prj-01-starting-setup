@@ -1,3 +1,12 @@
 <template>
-    <h4>This is a <b>Registration</b> component</h4>
+    <coach-form></coach-form>
 </template>
+
+<script>
+import CoachForm from '../../components/coaches/CoachForm.vue';
+export default {
+    components: {
+        CoachForm,
+    }
+}
+</script>
