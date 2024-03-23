@@ -25,6 +25,8 @@ export default {
           hourlyRate: 30,
         },
       ],
+
+      filteredAreas: []
     };
   },
 
