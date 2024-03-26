@@ -88,16 +88,6 @@ export default {
     };
   },
 
-  computed: {
-    numOfCoaches() {
-      return this.$store.getters.coaches.length;
-    },
-
-    formattedID() {
-      return 'c' + (this.numOfCoaches + 1);
-    },
-  },
-
   methods: {
     onAreaPick(event) {
       const checked = event.target.checked;
@@ -108,7 +98,7 @@ export default {
 
     onSubmit() {
       const newCoach = {
-        id: this.formattedID,
+        id: 'c3',
         firstName: this.firstName,
         lastName: this.lastName,
         areas: this.areas,
@@ -117,6 +107,8 @@ export default {
       };
 
       this.$store.commit('addCoach', newCoach);
+      this.$store.commit('changeUserStatus');
+      this.$router.replace('/coaches');
     },
   },
 };
