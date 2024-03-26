@@ -6,19 +6,20 @@
     </base-card>
   </section>
   <section>
-    <header>
       <base-card
         ><h3>Interested? Reach out now!</h3>
-        <base-button link :to="coachContactLink"
-          >Contact</base-button
-        ></base-card
-      >
-    </header>
-    <router-view></router-view>
+        <base-button link :to="coachContactLink">Contact</base-button
+        ><router-view></router-view
+      ></base-card>
   </section>
   <section>
     <base-card
-      ><base-badge v-for="area in areas" :key="area" :type="area" :title="area"></base-badge>
+      ><base-badge
+        v-for="area in areas"
+        :key="area"
+        :type="area"
+        :title="area"
+      ></base-badge>
       <p>{{ description }}</p>
     </base-card>
   </section>
@@ -54,12 +55,12 @@ export default {
     },
 
     description() {
-        return this.viewedCoach.description
+      return this.viewedCoach.description;
     },
 
     areas() {
-        return this.viewedCoach.areas
-    }
+      return this.viewedCoach.areas;
+    },
   },
 };
 </script>

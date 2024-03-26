@@ -1,12 +1,12 @@
 <template>
-  <coach-form @save-data="saveData"></coach-form>
+  <register-form @save-data="saveData"></register-form>
 </template>
 
 <script>
-import CoachForm from '../../components/coaches/CoachForm.vue';
+import RegisterForm from '../../components/coaches/RegisterForm.vue';
 export default {
   components: {
-    CoachForm,
+    RegisterForm,
   },
 
   methods: {
