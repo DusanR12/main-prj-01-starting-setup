@@ -3,44 +3,52 @@
     <base-card>
       <h2>Register as a coach now!</h2>
       <form @submit.prevent="onSubmit">
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !firstName.isValid}">
           <label for="firstname">Firstname</label>
           <input
-            v-model.trim="firstName"
+            v-model.trim="firstName.val"
             type="text"
             id="firstname"
             name="firstName"
+            @blur="clearValidity(firstName)"
           />
+          <p v-if="!firstName.isValid" class="errorText">Please enter a vaild name!</p>
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !lastName.isValid}">
           <label for="lastname">Lastname</label>
           <input
-            v-model.trim="lastName"
+            v-model.trim="lastName.val"
             type="text"
             id="lastname"
             name="lastName"
+            @blur="clearValidity(lastName)"
           />
+          <p v-if="!lastName.isValid" class="errorText">Please enter a vaild lastname!</p>
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !description.isValid}">
           <label for="description">Description</label>
           <textarea
-            v-model.trim="description"
+            v-model.trim="description.val"
             name="description"
             id="description"
             cols="20"
             rows="5"
+            @blur="clearValidity(description)"
           ></textarea>
+          <p v-if="!description.isValid" class="errorText">Please enter a vaild description!</p>
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !hourlyRate.isValid}">
           <label for="hourlyRate">Hourly Rate</label>
           <input
-            v-model="hourlyRate"
+            v-model="hourlyRate.val"
             type="number"
             id="hourlyRate"
             name="hourlyRate"
+            @blur="clearValidity(hourlyRate)"
           />
+          <p v-if="!hourlyRate.isValid" class="errorText">Rate must be greater that 0!</p>
         </div>
-        <div class="form-control">
+        <div class="form-control" :class="{invalid: !areas.isValid}">
           <h4>Areas of expertise</h4>
           <div>
             <label for="frontend">Frontend Development</label>
@@ -49,6 +57,7 @@
               type="checkbox"
               name="frontendArea"
               id="frontend"
+              @blur="clearValidity(areas)"
             />
           </div>
           <div>
@@ -58,6 +67,7 @@
               type="checkbox"
               name="backendArea"
               id="backend"
+              @blur="clearValidity(areas)"
             />
           </div>
           <div>
@@ -67,9 +77,12 @@
               type="checkbox"
               name="careerArea"
               id="career"
+              @blur="clearValidity(areas)"
             />
           </div>
+          <p v-if="!areas.isValid" class="errorText">You must pick at least one area of expertise!</p>
         </div>
+        <p class="errorText" v-if="formIsInvalid">Please fix the above errors and submit again!</p>
         <base-button>Register</base-button>
       </form>
     </base-card>
@@ -78,13 +91,30 @@
 
 <script>
 export default {
+  emits: ['save-data'],
   data() {
     return {
-      firstName: '',
-      lastName: '',
-      areas: [],
-      description: '',
-      hourlyRate: '',
+      firstName: {
+        val: '',
+        isValid: true
+      },
+      lastName: {
+        val: '',
+        isValid: true
+      },
+      description: {
+        val: '',
+        isValid: true
+      },
+      hourlyRate: {
+        val: null,
+        isValid: true
+      },
+      areas: {
+        val: [],
+        isValid: true
+      },
+      formIsInvalid: false
     };
   },
 
@@ -92,23 +122,57 @@ export default {
     onAreaPick(event) {
       const checked = event.target.checked;
       if (checked) {
-        this.areas.push(event.target.id);
+        this.areas.val.push(event.target.id);
       }
     },
 
+    validateForm() {
+      this.formIsInvalid = false
+      if (this.firstName.val === '') {
+        this.firstName.isValid = false
+        this.formIsInvalid = true
+      }
+      if (this.lastName.val === '') {
+        this.lastName.isValid = false
+        this.formIsInvalid = true
+      }
+      if (this.description.val === '') {
+        this.description.isValid = false
+        this.formIsInvalid = true
+      }
+
+      if (this.hourlyRate.val == null || this.hourlyRate.val < 0) {
+        this.hourlyRate.isValid = false
+        this.formIsInvalid = true
+      }
+
+      if (this.areas.val.length < 1) {
+        this.areas.isValid = false
+        this.formIsInvalid = true
+      }
+    },
+
+    clearValidity(input) {
+      input.isValid = true
+    },
+
     onSubmit() {
+      this.validateForm()
+
+      if (this.formIsInvalid) {
+        return
+      }
+
       const newCoach = {
         id: 'c3',
-        firstName: this.firstName,
-        lastName: this.lastName,
-        areas: this.areas,
-        description: this.description,
-        hourlyRate: this.hourlyRate,
+        firstName: this.firstName.val,
+        lastName: this.lastName.val,
+        areas: this.areas.val,
+        description: this.description.val,
+        hourlyRate: this.hourlyRate.val,
       };
 
-      this.$store.commit('addCoach', newCoach);
-      this.$store.commit('changeUserStatus');
-      this.$router.replace('/coaches');
+      this.$emit('save-data', newCoach);     
     },
   },
 };
@@ -117,6 +181,10 @@ export default {
 <style #scoped>
 .form-control {
   margin: 0.5rem 0;
+}
+
+.errorText {
+  color: red;
 }
 
 label {
