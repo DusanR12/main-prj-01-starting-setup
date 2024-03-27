@@ -9,5 +9,9 @@ export default {
 
     isUserRegistrated(state) {
         return state.userIsRegistrated;
+    },
+
+    userID(state) {
+        return state.userID
     }
 }

@@ -5,5 +5,9 @@ export default {
 
     changeUserStatus(state) {
         state.userIsRegistrated = true
+    },
+
+    setUserID(state, uniqueID) {
+        state.userID = uniqueID
     }
 }

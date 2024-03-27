@@ -8,8 +8,8 @@
   <section>
       <base-card
         ><h3>Interested? Reach out now!</h3>
-        <base-button link :to="coachContactLink">Contact</base-button
-        ><router-view></router-view
+        <base-button v-if="!contactButtonIsHidden" link :to="coachContactLink">Contact</base-button
+        ><router-view @show-btn="showContactBtn" @hide-btn="hideContactBtn"></router-view
       ></base-card>
   </section>
   <section>
@@ -27,6 +27,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      contactButtonIsHidden: false
+    }
+  },
   computed: {
     viewedCoachId() {
       return this.$route.params.id;
@@ -62,5 +67,15 @@ export default {
       return this.viewedCoach.areas;
     },
   },
+
+  methods: {
+    hideContactBtn() {
+      this.contactButtonIsHidden = true
+    },
+
+    showContactBtn() {
+      this.contactButtonIsHidden = false
+    }
+  }
 };
 </script>

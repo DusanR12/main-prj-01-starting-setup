@@ -91,7 +91,7 @@
 
 <script>
 export default {
-  emits: ['save-data'],
+  emits: ['send-data'],
   data() {
     return {
       firstName: {
@@ -164,7 +164,6 @@ export default {
       }
 
       const newCoach = {
-        id: 'c3',
         firstName: this.firstName.val,
         lastName: this.lastName.val,
         areas: this.areas.val,
@@ -172,7 +171,7 @@ export default {
         hourlyRate: this.hourlyRate.val,
       };
 
-      this.$emit('save-data', newCoach);     
+      this.$emit('send-data', newCoach);     
     },
   },
 };
