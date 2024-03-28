@@ -6,12 +6,4 @@ export default {
     hasCoaches(state) {
         return state.coaches && state.coaches.length > 0
     },
-
-    isUserRegistrated(state) {
-        return state.userIsRegistrated;
-    },
-
-    userID(state) {
-        return state.userID
-    }
 }

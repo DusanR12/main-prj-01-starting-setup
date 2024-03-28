@@ -3,12 +3,14 @@
   <section>
     <base-card
       ><div class="controls">
-        <base-button mode="outline">Refresh</base-button>
-        <base-button v-if="!isUserRegistrated" link to="/register">Register as a Coach</base-button>
+        <base-button @click="loadCoaches" mode="outline">Refresh</base-button>
+        <base-button v-if="!isUserRegistrated" link to="/register"
+          >Register as a Coach</base-button
+        >
       </div>
       <ul v-if="hasCoaches">
         <coach-item
-          v-for="coach in coaches"
+          v-for="coach in filteredCoaches"
           :key="coach.id"
           :id="coach.id"
           :firstName="coach.firstName"
@@ -27,14 +29,17 @@ import CoachItem from '../../components/coaches/CoachItem.vue';
 import FilterCoach from '../../components/coaches/FilterCoach.vue';
 import BaseButton from '../../components/UI/BaseButton.vue';
 export default {
+  created() {
+    this.loadCoaches()
+  },
   data() {
     return {
       activeFilters: {
         frontend: true,
         backend: true,
-        career: true
-      }
-    }
+        career: true,
+      },
+    };
   },
   components: {
     CoachItem,
@@ -42,20 +47,20 @@ export default {
     BaseButton,
   },
   computed: {
-    coaches() {
+    filteredCoaches() {
       const allCoaches = this.$store.getters.coaches;
-      return allCoaches.filter(coach => {
+      return allCoaches.filter((coach) => {
         if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
-          return true
+          return true;
         }
         if (this.activeFilters.backend && coach.areas.includes('backend')) {
-          return true
+          return true;
         }
         if (this.activeFilters.career && coach.areas.includes('career')) {
-          return true
+          return true;
         }
         return false;
-      })
+      });
     },
 
     hasCoaches() {
@@ -64,14 +69,18 @@ export default {
 
     isUserRegistrated() {
       return this.$store.getters.isUserRegistrated;
-    }
+    },
   },
 
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
-    }
-  }
+    },
+
+    loadCoaches() {
+      this.$store.dispatch('loadCoaches');
+    },
+  },
 };
 </script>
 

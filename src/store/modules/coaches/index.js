@@ -5,9 +5,18 @@ import mutations from './mutations';
 export default {
   state() {
     return {
-      coaches: [],
-      userIsRegistrated: false,
-      userID: null
+      coaches: [
+        {
+          id: 'c1',
+          firstName: 'Nedja',
+          lastName: 'Radulovic',
+          areas: [
+            'career'
+          ],
+          description: 'My name is Nedja Radulovic',
+          hourlyRate: 40,
+        },
+      ],
     };
   },
 

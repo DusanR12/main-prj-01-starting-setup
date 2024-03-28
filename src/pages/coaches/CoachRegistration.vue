@@ -4,7 +4,6 @@
 
 <script>
 import RegisterForm from '../../components/coaches/RegisterForm.vue';
-import axios from 'axios';
 export default {
   components: {
     RegisterForm,
@@ -12,21 +11,9 @@ export default {
 
   methods: {
     sendData(newCoach) {
-      axios
-        .post(
-          'https://find-your-coach-a2ac9-default-rtdb.firebaseio.com/coaches.json', {
-            newCoach
-          }
-          
-        )
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-      this.$store.commit('changeUserStatus');
+      this.$store.dispatch('setCoach', newCoach);
       this.$router.replace('/coaches');
+      this.$store.commit('changeUserStatus');
     },
   },
 };

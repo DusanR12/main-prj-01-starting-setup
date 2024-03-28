@@ -1,13 +1,10 @@
 export default {
-    addCoach(state, newCoach) {
+    registerCoach(state, newCoach) {
         state.coaches.push(newCoach)
     },
 
-    changeUserStatus(state) {
-        state.userIsRegistrated = true
+    setCoaches(state, payload) {
+        state.coaches = payload
     },
 
-    setUserID(state, uniqueID) {
-        state.userID = uniqueID
-    }
 }
