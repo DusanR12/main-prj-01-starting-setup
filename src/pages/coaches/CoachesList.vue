@@ -1,11 +1,14 @@
 <template>
+  <base-dialog @close="handleError" :show="!!error" title="An error occurred!">
+    <p>{{ error }}</p>
+  </base-dialog>
   <filter-coach @changed-filters="setFilters"></filter-coach>
   <section>
     <base-card
       ><div class="controls">
         <base-button @click="loadCoaches" mode="outline">Refresh</base-button>
         <base-button v-if="!isUserRegistrated && !isLoading" link to="/register"
-          >Register as a Coach</base-button 
+          >Register as a Coach</base-button
         >
       </div>
       <div v-if="isLoading">
@@ -30,7 +33,7 @@
 <script>
 import CoachItem from '../../components/coaches/CoachItem.vue';
 import FilterCoach from '../../components/coaches/FilterCoach.vue';
-import BaseButton from '../../components/UI/BaseButton.vue';
+
 export default {
   created() {
     this.loadCoaches();
@@ -43,12 +46,12 @@ export default {
         backend: true,
         career: true,
       },
+      error: null,
     };
   },
   components: {
     CoachItem,
     FilterCoach,
-    BaseButton,
   },
   computed: {
     filteredCoaches() {
@@ -72,12 +75,12 @@ export default {
     },
 
     isUserRegistrated() {
-        const userID = this.$store.getters.getUserID
-        const coaches = this.$store.getters.coaches;
+      const userID = this.$store.getters.getUserID;
+      const coaches = this.$store.getters.coaches;
 
-        return coaches.some(coach => {
-            return coach.id === userID
-        })
+      return coaches.some((coach) => {
+        return coach.id === userID;
+      });
     },
   },
 
@@ -88,9 +91,17 @@ export default {
 
     async loadCoaches() {
       this.isLoading = true;
-      await this.$store.dispatch('loadCoaches');
+      try {
+        await this.$store.dispatch('loadCoaches');
+      } catch (error) {
+        this.error = error;
+      }
       this.isLoading = false;
     },
+
+    handleError() {
+      this.error = null
+    }
   },
 };
 </script>
