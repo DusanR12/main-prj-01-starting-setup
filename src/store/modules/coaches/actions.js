@@ -26,7 +26,7 @@ export default {
     const coaches = [];
     try {
       const response = await axios.get(
-        'https://find-your-coach-a2ac9-default-rtdb.firebaseio.com/coaches.json'
+        'https://find-your-coach-a2ac9-default-rtdb.firebaseeeio.com/coaches'
       );
 
       const responseData = response.data;
@@ -45,7 +45,14 @@ export default {
         context.commit('setCoaches', coaches);
       }
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        console.log(error.response.status);
+      } else if (error.request) {
+        const noResponse = error.request;
+        console.log(noResponse);
+      } else {
+        console.log(error.message || 'Failed to fetch');
+      }
     }
 
     // FETCH APPROACH
