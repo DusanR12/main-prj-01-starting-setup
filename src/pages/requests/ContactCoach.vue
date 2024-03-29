@@ -70,15 +70,19 @@ export default {
       }
 
       const newRequest = {
+        coachID: this.$route.params.id,
         email: this.email.val,
         message: this.message.val,
       };
 
-      const currentRoutePath = this.$route.path;
+      this.$store.dispatch('storeRequests', newRequest);
 
-      if (currentRoutePath.includes(this.getUserID)) {
-        this.$store.commit('addRequests', newRequest);
-      }
+      
+      //  STORE REQUESTS ONLY FOR USER
+      // const currentRoutePath = this.$route.path;
+
+      // if (currentRoutePath.includes(this.getUserID)) {
+      // }
       this.$router.push('/coaches');
     },
   },
